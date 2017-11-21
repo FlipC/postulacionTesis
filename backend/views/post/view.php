@@ -31,7 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'titulo_post',
             'cuerpo_post:html',
             'fecha_creacion_post',
-            'imagen_Post',
+            [
+                'attribute'=>'imagen_Post',
+                'value'=> Yii::getAlias('@noticiaImgUrl').'/'. $model->imagen_Post,
+                'format'=>['image', ['width'=> '100', 'height'=> '100']]
+            ]
         ],
     ]) ?>
 

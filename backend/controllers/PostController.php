@@ -8,6 +8,7 @@ use backend\models\postSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * PostController implements the CRUD actions for post model.
@@ -65,8 +66,16 @@ class PostController extends Controller
     {
         $model = new post();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//            var_dump(Yii::$app->request->post());
+        if ($model->load(Yii::$app->request->post())) {
+            $fecha = new \DateTime();
+            $noticiaId = $fecha->getTimestamp();
+            $image = UploadedFile::getInstance($model, 'imagen_Post');
+            $imgName='not_'.$noticiaId. '.' . $image->getExtension();
+            $image->saveAs(Yii::getAlias('@noticiaImgPath').'/'.$imgName);
+            $model->imagen_Post = $imgName;
+            $model->save();
+
+
             return $this->redirect(['view', 'id' => $model->id_post]);
         } else {
             return $this->render('create', [
@@ -75,17 +84,13 @@ class PostController extends Controller
         }
     }
 
-    /**
-     * Updates an existing post model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+
             return $this->redirect(['view', 'id' => $model->id_post]);
         } else {
             return $this->render('update', [

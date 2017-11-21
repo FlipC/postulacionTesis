@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'fecha_creacion_post',
              'id_fondo',
 
+
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

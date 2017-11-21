@@ -14,7 +14,7 @@ use backend\models\TipoPost;
 
 <div class="post-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
     <div class="row">
         <div class="col-lg-3">
             <?= $form->field($model, 'titulo_post')->textInput(['maxlength' => true]) ?>
@@ -45,11 +45,13 @@ use backend\models\TipoPost;
             ?>
         </div>
     </div>
-
     <div class="row">
         <div class="col-lg-3">
-            <?= $form->field($model, 'imagen_Post')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'imagen_Post')->fileInput()?>
         </div>
+    </div>
+
+    <div class="row">
         <div class="col-lg-3">
             <?= $form->field($model, 'id_fondo')->dropDownList( $var = \yii\helpers\ArrayHelper :: map(fondo :: find()->all(),'id_fondo','nombre_fondo') ,['class'=>'form-control','prompt'=>'Seleccionar']);?>
         </div>
